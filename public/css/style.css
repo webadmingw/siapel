@@ -1,0 +1,278 @@
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    font-size: small;
+    margin-bottom: 100px;
+}
+
+main {
+    margin-top: 200px;
+}
+
+@media (max-width: 768px) {
+    main {
+        margin-bottom: 200px;
+    }
+}
+
+.container {
+    width: 90% !important;
+    margin: 0 auto;
+}
+
+/* Header styles */
+header {
+    color: #fff;
+    margin-bottom: auto;
+    position: fixed; 
+    top: 0; 
+    width: 100%;
+    z-index: 100000000;
+}
+
+.top-header {
+    height: 30px;
+    background: #222;
+    vertical-align: sub;
+}
+
+#clock, #weather {
+    margin-top: 3px;
+    font-size: 11px;
+}
+
+#clock {
+    float: left;
+}
+
+#weather {
+    float: right;
+}
+
+.site-branding-container {
+    margin-right: auto;
+    border-bottom: #d5d4d4 1px solid;
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    background-color: #f4f4f4;
+    padding-top: 10px;
+}
+
+.site-branding-container > .custom-logo-bangga {
+    margin-left: auto;
+}
+
+@media (max-width: 768px) {
+    .custom-logo-bangga {
+        display: none;
+    }
+}
+
+.site-title {
+    font-size: 27px;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.site-title a {
+    font-weight: bold;
+    color: red;
+    text-decoration: none;
+}
+
+.site-branding-container .site-logo {
+    margin-right: 1em;
+}
+
+.site-description {
+    color: #444;
+    margin: 0;
+    font-weight: 900;
+    font-size: var(--exalt-font-size-xs);
+}
+
+nav ul {
+    background-color: #f4f4f4;
+    list-style: none;
+    text-align: left;
+    height: 35px;
+}
+
+nav ul li {
+    vertical-align: middle;
+    display: inline;
+    margin: 0 10px;
+    height: 35px;
+    padding: 90px 0 0 0;
+}
+
+nav ul li a {
+    color: #313131;
+    text-decoration: none;
+    font-weight: 900;
+}
+
+ol, ul {
+    padding-left: 0rem !important;
+}
+
+/* Articles section styles */
+.articles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.empty {
+    width: 100%;
+    text-align: center;
+    color: #767575;
+    border-top: #d5d4d4 1px solid;
+    padding-top: 5px;
+}
+
+.articles article {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    flex: 1 1 calc(33.333% - 20px);
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.articles img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.articles h5 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    text-align: left;
+}
+
+.articles h5 a {
+    text-decoration: none;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .articles {
+        flex-direction: column;
+    }
+
+    .articles article {
+        flex: 1 1 100%;
+    }
+}
+
+/* Footer styles */
+footer {
+    background: #767575;
+    color: #fff;
+    padding: 5px 0;
+    position: fixed; 
+    bottom: 0; 
+    width: 100%;
+}
+
+.custom-span-bottom {
+    margin-top: 35px;
+    float: right;
+}
+
+.custom-logo-bottom {
+    margin-top: 11px;
+}
+
+@media (max-width: 768px) {
+    .custom-span-bottom {
+        margin-top: 35px;
+        text-align: center;
+    }
+    
+    .custom-logo-bottom {
+        margin-top: 11px auto;
+    }
+}
+
+/* Hero section styles */
+.hero {
+    position: relative;
+    background: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    max-height: 400px;
+}
+
+.carousel-item {
+    min-width: 100%;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+}
+
+.carousel-item h2 a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.carousel-content {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 20px;
+}
+
+.carousel-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.carousel-controls button {
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: #fff;
+    font-size: 2em;
+    cursor: pointer;
+    margin: 0 55px;
+}
+
+.news-detail img {
+    width: 100%;
+    margin-bottom: 13px;
+}
+
+.news-detail h2 {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+}

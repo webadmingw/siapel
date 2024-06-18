@@ -57,18 +57,49 @@ class EventController {
 
     public function create() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $title = $_POST['title'];
-            $description = $_POST['description'];
-            $start_time = $_POST['start_time'];
-            $end_time = $_POST['end_time'];
-            $venue = $_POST['venue'];
+            $errors = array();
+            if (!isset($_POST['title']) || empty($_POST['title'])) {
+                $errors['title'] = 'Judul pelatihan harus diisi';
+            } else {
+                $title = $_POST['title'];
+            }
+            if (!isset($_POST['description']) || empty($_POST['description'])) {
+                $errors['description'] = 'Deskripsi pelatihan harus diisi';
+            } else {
+                $description = $_POST['description'];
+            }
+            if (!isset($_POST['start_time']) || empty($_POST['start_time'])) {
+                $errors['start_time'] = 'Waktu mulai pelatihan harus diisi';
+            } else {
+                $start_time = $_POST['start_time'];
+            }
+            if (!isset($_POST['end_time']) || empty($_POST['end_time'])) {
+                $errors['end_time'] = 'Waktu selesai pelatihan harus diisi';
+            } else {
+                $end_time = $_POST['end_time'];
+            }
+            if (!isset($_POST['venue']) || empty($_POST['venue'])) {
+                $errors['venue'] = 'Tempat pelatihan harus diisi';
+            } else {
+                $venue = $_POST['venue'];
+            }
+
             $online_link = $_POST['online_link'];
             $map_link = $_POST['map_link'];
-            $this->eventModel->addTraining($title, $description, $start_time, $end_time, $venue, $online_link, $map_link);
-            header('Location: ' . BASE_URL . "event");
-            exit;
-        } 
+            $cat_id = 1;
 
+            if (!empty($errors)) {
+                require_once '../app/Views/event/create.php';
+                exit;
+            }
+            
+            if($this->eventModel->addTraining($title, $description, $start_time, $end_time, $venue, $cat_id, $online_link, $map_link)){
+                header('Location: ' . BASE_URL . "event");
+                exit;
+            }else{
+                $error = "Gagal simpan Pelatihan";
+            }
+        } 
         require_once '../app/Views/event/create.php';
     }
 

@@ -105,13 +105,14 @@ class EventModel {
         return $this->db->execute();
     }
 
-    public function addTraining($title, $description, $start_time, $end_time, $venue, $online_link, $map_link) {
-        $this->db->query('INSERT INTO training (title, description, start_time, end_time, venue, online_link, map_link, created_by, updated_by) VALUES (:title, :description, :start_time, :end_time, :venue, :online_link, :map_link, :created_by)');
+    public function addTraining($title, $description, $start_time, $end_time, $venue, $cat_id, $online_link, $map_link) {
+        $this->db->query('INSERT INTO training (title, description, start_time, end_time, venue, cat_id, online_link, map_link, created_by, updated_by) VALUES (:title, :description, :start_time, :end_time, :venue, :cat_id, :online_link, :map_link, :created_by, :updated_by)');
         $this->db->bind(':title', $title);
         $this->db->bind(':description', $description);
         $this->db->bind(':start_time', $start_time);
         $this->db->bind(':end_time', $end_time);
         $this->db->bind(':venue', $venue);
+        $this->db->bind(':cat_id', $cat_id);
         $this->db->bind(':online_link', $online_link);
         $this->db->bind(':map_link', $map_link);
         $this->db->bind(':created_by', $_SESSION['eid']);

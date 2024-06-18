@@ -19,6 +19,7 @@ class Database {
 
         try {
             $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
+            $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         } catch (PDOException $e) {
             $this->error = $e->getMessage();
             $this->errorNumber = $e->getCode();
@@ -75,7 +76,11 @@ class Database {
         return $this->stmt->queryString;
     }
 
-    public function errorString() {
-        return $this->stmt->error;
+    public function debugDumpParams() {
+        return $this->stmt->debugDumpParams();
+    }
+
+    public function errorInfo() {
+        return $this->stmt->errorInfo();
     }
 }

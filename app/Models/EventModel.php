@@ -7,16 +7,29 @@ class EventModel {
     }
 
     public function getAll() {
-        $this->db->query('SELECT * FROM news ORDER BY created_at DESC');
+        $this->db->query('
+        select 
+            n.*, u.fullname updated_by, uc.fullname created_by, c.category, count(er.id) t_participant
+        from training n 
+        join users u on u.eid = n.updated_by
+        join users uc on u.eid = n.created_by
+        join category c on c.id = n.cat_id
+        left join event_registrations er on er.event_id = n.id
+        where 
+            n.deleted=0
+        group by n.id
+        order by n.updated_at;
+        ');
         return $this->db->resultSet();
     }
 
     public function getAllHomePage() {
         $this->db->query('
         select 
-            n.*, u.fullname, count(er.id) t_participant
+            n.*, u.fullname, c.category, count(er.id) t_participant
         from training n 
         join users u on u.eid = n.updated_by
+        join category c on c.id = n.cat_id
         left join event_registrations er on er.event_id = n.id
         where 
             n.published=1 
@@ -31,9 +44,10 @@ class EventModel {
     public function getById($id) {
         $this->db->query('
         select 
-            n.*, u.fullname, count(er.id) t_participant 
+            n.*, u.fullname, c.category, count(er.id) t_participant 
         from training n 
         join users u on u.eid = n.updated_by 
+        join category c on c.id = n.cat_id
         left join event_registrations er on er.event_id = n.id
         where 
         n.id=:id
@@ -59,4 +73,50 @@ class EventModel {
         $this->db->bind(':reg_date', date('Y-m-d H:i:s')); // use current datetime
         return $this->db->execute();
     }
+
+    public function update($id, $title, $description, $start_time, $end_time, $venue, $online_link, $map_link) {
+        $this->db->query('
+        UPDATE training 
+        SET 
+            title = :title, 
+            description = :description, 
+            start_time = :start_time, 
+            end_time = :end_time, 
+            venue = :venue, 
+            online_link = :online_link, 
+            map_link = :map_link 
+        WHERE 
+            id = :id;
+        ');
+        $this->db->bind(':id', $id);
+        $this->db->bind(':title', $title);
+        $this->db->bind(':description', $description);
+        $this->db->bind(':start_time', $start_time);
+        $this->db->bind(':end_time', $end_time);
+        $this->db->bind(':venue', $venue);
+        $this->db->bind(':online_link', $online_link);
+        $this->db->bind(':map_link', $map_link);
+        return $this->db->execute();
+    }
+
+    public function delete($id) {
+        $this->db->query('UPDATE training SET deleted = 1 WHERE id = :id');
+        $this->db->bind(':id', $id);
+        return $this->db->execute();
+    }
+
+    public function addTraining($title, $description, $start_time, $end_time, $venue, $online_link, $map_link) {
+        $this->db->query('INSERT INTO training (title, description, start_time, end_time, venue, online_link, map_link, created_by, updated_by) VALUES (:title, :description, :start_time, :end_time, :venue, :online_link, :map_link, :created_by)');
+        $this->db->bind(':title', $title);
+        $this->db->bind(':description', $description);
+        $this->db->bind(':start_time', $start_time);
+        $this->db->bind(':end_time', $end_time);
+        $this->db->bind(':venue', $venue);
+        $this->db->bind(':online_link', $online_link);
+        $this->db->bind(':map_link', $map_link);
+        $this->db->bind(':created_by', $_SESSION['eid']);
+        $this->db->bind(':updated_by', $_SESSION['eid']);
+        return $this->db->execute();
+    }
 }
+

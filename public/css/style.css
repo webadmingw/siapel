@@ -276,3 +276,32 @@ footer {
     line-height: 1.6;
     background-color: #f4f4f4;
 }
+
+.btn-xs {
+    padding: 0.2em 0.4em;
+    font-size: 0.8em;
+    line-height: 1.5;
+    border-radius: 0.2em;
+}
+
+.btn-xs.btn-primary {
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    color: #fff;
+}
+
+.btn-xs.btn-success {
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    color: #fff;
+}
+
+.btn-xs.btn-danger {
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    color: #fff;
+}
+
+.form-group, .form-control {
+    border-radius: 0 !important;
+}

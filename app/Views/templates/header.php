@@ -44,7 +44,7 @@
                             <li><a href="<?= BASE_URL ?>event">Pelatihan</a></li>
                         <?php endif; ?>
                         <?php if($_SESSION["role"] === "admin"): ?>
-                            <li><a href="<?= BASE_URL ?>users">Pengguna</a></li>
+                            <li><a href="<?= BASE_URL ?>user">Pengguna</a></li>
                         <?php endif; ?>
                         <li><a href="<?= BASE_URL ?>logout">Keluar</a></li>
                     <?php else: ?>

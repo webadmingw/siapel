@@ -30,7 +30,7 @@ class LoginController {
             header('Location: ' . BASE_URL);
             exit;
         } else {
-            $error = 'Nomor induk atau kata kunci tidak valid';
+            $error = 'Email atau kata kunci tidak valid';
             require_once '../app/Views/login/index.php';
         }
     }

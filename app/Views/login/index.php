@@ -11,9 +11,9 @@
                     </div>
                 <?php } ?>
                 <div class="form-group mb-4">
-                    <label for="nomor_eid" class="text-left">Induk Pegawai:</label>
+                    <label for="nomor_eid" class="text-left">Email:</label>
                     <br>
-                    <input type="text" class="form-control form-control-md shadow-none" id="nomor_eid" name="nomor_eid" placeholder="Masukkan Induk Pegawai" style="font-size: small; color: #666;" required>
+                    <input type="text" class="form-control form-control-md shadow-none" id="nomor_eid" name="nomor_eid" placeholder="Masukkan Email" style="font-size: small; color: #666;" required>
                 </div>
                 <div class="form-group mb-4">
                     <label for="key" class="text-left">Kata Kunci:</label>

@@ -10,11 +10,7 @@
                         <?= $error ?>
                     </div>
                 <?php } ?>
-                <div class="form-group mb-4">
-                    <label for="nomor_eid" class="text-left">Induk Pegawai:</label>
-                    <br>
-                    <input type="text" class="form-control form-control-md shadow-none" id="nomor_eid" name="nomor_eid" placeholder="Masukkan Induk Pegawai" style="font-size: small; color: #666;" value="<?= isset($post['nomor_eid']) ? $post['nomor_eid'] : ''; ?>" required>
-                </div>
+                <input type="hidden" class="form-control form-control-md shadow-none" id="nomor_eid" name="nomor_eid" style="font-size: small; color: #666;" value="<?= isset($post['nomor_eid']) ? $post['nomor_eid'] : Helper::generateRandomNumber() ?>" required>
                 <div class="form-group mb-4">
                     <label for="email" class="text-left">Email:</label>
                     <br>

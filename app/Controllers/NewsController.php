@@ -20,17 +20,17 @@ class NewsController {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $title = $_POST['title'];
             $content = $_POST['content'];
-            $contributor_id = $_SESSION['user_id'];
+            $contributor_id = $_SESSION['eid'];
             $image = $_FILES['image']['name'];
 
             // Handle image upload
-            $target_dir = "../public/images/";
+            $target_dir = "../public/upload/";
             $target_file = $target_dir . basename($image);
             move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
 
             $this->newsModel->createNews($title, $content, $contributor_id, $image);
 
-            header('Location: /news');
+            header('Location: ' . BASE_URL . "news");
         } else {
             require_once '../app/Views/news/create.php';
         }
@@ -43,13 +43,13 @@ class NewsController {
             $image = $_FILES['image']['name'];
 
             // Handle image upload
-            $target_dir = "../public/images/";
+            $target_dir = "../public/upload/";
             $target_file = $target_dir . basename($image);
             move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
 
             $this->newsModel->updateNews($id, $title, $content, $image);
 
-            header('Location: /news');
+            header('Location: ' . BASE_URL . "news");
         } else {
             $news = $this->newsModel->getNewsById($id);
             require_once '../app/Views/news/edit.php';
@@ -57,7 +57,7 @@ class NewsController {
     }
 
     public function delete($id) {
-        $this->newsModel->deleteNews($id);
-        header('Location: /news');
+        $re = $this->newsModel->deleteNews($id);
+        header('Location: ' . BASE_URL . "news");
     }
 }

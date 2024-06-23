@@ -15,7 +15,7 @@ class UserModel {
 
     public function getUserByEidAndPasswordHash($eid, $password) {
         $password_hash = md5($password);
-        $this->db->query("select * from  users where eid = :eid and password_hash = :password_hash and deleted = 0;");
+        $this->db->query("select * from  users where email = :eid and password_hash = :password_hash and deleted = 0;");
         $this->db->bind(':eid', $eid);
         $this->db->bind(':password_hash', $password_hash);
 

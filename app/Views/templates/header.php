@@ -42,6 +42,7 @@
                     <?php if(isset($_SESSION["eid"])): ?>
                         <?php if($_SESSION["role"] === "admin" || $_SESSION["role"] === "contributor"): ?>
                             <li><a href="<?= BASE_URL ?>event">Pelatihan</a></li>
+                            <li><a href="<?= BASE_URL ?>news">Berita</a></li>
                         <?php endif; ?>
                         <?php if($_SESSION["role"] === "admin"): ?>
                             <li><a href="<?= BASE_URL ?>user">Pengguna</a></li>

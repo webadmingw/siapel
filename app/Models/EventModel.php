@@ -119,5 +119,26 @@ class EventModel {
         $this->db->bind(':updated_by', $_SESSION['eid']);
         return $this->db->execute();
     }
+
+    public function addComment($eventId, $userId, $comment) {
+        $this->db->query('INSERT INTO comments (event_id, created_by, comment) VALUES (:event_id, :user_id, :comment)');
+        $this->db->bind(':event_id', $eventId);
+        $this->db->bind(':user_id', $userId);
+        $this->db->bind(':comment', $comment);
+        return $this->db->execute();
+    }
+
+    public function getCommentsByEventId($eventId) {
+        $this->db->query('
+        SELECT 
+            c.*, u.fullname 
+        FROM comments c
+        join users u on u.eid = c.created_by 
+        WHERE event_id = :event_id;
+        ');
+        $this->db->bind(':event_id', $eventId);
+        return $this->db->resultSet();
+    }
+
 }
 

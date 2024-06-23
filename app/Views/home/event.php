@@ -53,6 +53,48 @@
             </div>
         </div>
     </div>
+    <div class="row justify-content-start">
+        <div class="col-md-6 p-4">
+            <h5 class="text-left mb-4" style="padding-bottom: 10px;">Komentar</h5>
+            <div class="comment-list" style="padding: 0px;">
+                <?php foreach ($comments as $comment): ?>
+                    <div class="comment-box" style="border: 1px solid #ccc; padding: 10px; margin-bottom: -1px;">
+                        <p><?= $comment['comment'] ?></p>
+                        <p class="text-muted"><?= $comment['fullname'] ?>, <?= $comment['created_at'] ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <?php if (isset($_SESSION['eid'])): ?>
+            <div class="comment-form form-group mb-4" style="margin: 5px 0;">
+                <textarea class="form-control form-control-md shadow-none" id="comment" name="comment" placeholder="Masukkan Komentar" style="font-size: small; color: #666;" required></textarea>
+                <button type="button" id="btn-comment" class="btn btn-small" style="margin-top: 20px; margin-bottom: 20px; background-color: #3ba1da; color: #fff; padding: 10px 20px;">Kirim</button>
+            </div>
+            <?php else: ?>
+                <p>Anda harus login untuk mengirim komentar.</p>
+            <?php endif; ?>
+        </div>
+    </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#btn-comment').on('click', function(e) {
+            e.preventDefault();
+            if ($('#comment').val() === '') {
+                alert('Komentar tidak boleh kosong');
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo BASE_URL ?>home/addComment', // Replace with your comment submission URL
+                data: { comment: $('#comment').val(), event: <?= $id ?> },
+                success: function(data) {
+                    window.location.reload();
+                }
+            });
+        });
+    });
+</script>
+
 
 <?php require_once '../app/Views/templates/footer.php'; ?>

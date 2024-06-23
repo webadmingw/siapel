@@ -25,6 +25,7 @@ class HomeController {
     public function event($id) {
         $news = $this->eventModel->getById($id);
         $registeredEvent = $this->eventModel->getEventRegByUserAndEventId($id, $_SESSION['eid']);
+        $comments = $this->eventModel->getCommentsByEventId($id);
         require_once '../app/Views/home/event.php';
     }
 
@@ -34,6 +35,14 @@ class HomeController {
         }
 
         header('Location: ' . BASE_URL . "home/event/" . $id);
+        exit;
+    }
+
+    public function addComment() {
+        if($_POST){
+            $result = $this->eventModel->addComment($_POST['event'], $_SESSION['eid'], $_POST['comment']);
+            echo json_encode(['success' => $result]);
+        }
         exit;
     }
 

@@ -46,4 +46,12 @@ class HomeController {
         exit;
     }
 
+    public function search() {
+        $event = [];
+        if ($_SERVER['REQUEST_METHOD'] == 'GET' && $_GET["keyword"]) {
+            $event = $this->eventModel->searchAll($_GET["keyword"]);
+        }
+        require_once '../app/Views/home/search.php';
+    }
+
 }

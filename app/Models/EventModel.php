@@ -23,6 +23,25 @@ class EventModel {
         return $this->db->resultSet();
     }
 
+    public function searchAll($keyword) {
+        $search = "%{$keyword}%";
+        return $this->db->queryLike("
+        select 
+            n.*, u.fullname, c.category, count(er.id) t_participant
+        from training n 
+        join users u on u.eid = n.updated_by
+        join category c on c.id = n.cat_id
+        left join event_registrations er on er.event_id = n.id
+        where 
+            n.published=1 
+            and n.deleted=0
+            and start_time > now()
+            and n.title like ?
+        group by n.id
+        order by n.updated_at;
+        ", $keyword);
+    }
+
     public function getAllHomePage() {
         $this->db->query('
         select 

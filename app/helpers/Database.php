@@ -26,6 +26,13 @@ class Database {
         }
     }
 
+    public function queryLike($sql, $keyword){
+        $search = "%{$keyword}%";
+        $stmt = $this->dbh->prepare($sql);
+        $stmt->execute([$search]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function query($sql) {
         $this->stmt = $this->dbh->prepare($sql);
     }

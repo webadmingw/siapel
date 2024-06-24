@@ -18,4 +18,51 @@ class Helper {
         }
         return $randomNumber;
     }
+
+    public static function timeAgo($datetime, $full = false) {
+        $loc = (new DateTime)->getTimezone();
+        $now = new DateTime(date('y-m-d h:i:s A'));
+        $now->setTimezone($loc);
+
+        $ago = new DateTime($datetime);
+        $ago->setTimezone($loc);
+        
+        $diff = $now->diff($ago);
+    
+        // Calculate weeks manually
+        $weeks = floor($diff->d / 7);
+        $days = $diff->d % 7;
+    
+        $string = array(
+            'y' => 'tahun',
+            'm' => 'bulan',
+            'w' => 'minggu',
+            'd' => 'hari',
+            'h' => 'jam',
+            'i' => 'menit',
+            's' => 'detik',
+        );
+        
+        $values = array(
+            'y' => $diff->y,
+            'm' => $diff->m,
+            'w' => $weeks,
+            'd' => $days,
+            'h' => $diff->h,
+            'i' => $diff->i,
+            's' => $diff->s,
+        );
+
+        foreach ($string as $k => &$v) {
+            if ($values[$k]) {
+                $v = $values[$k] . ' ' . $v;
+            } else {
+                unset($string[$k]);
+            }
+        }
+    
+        if (!$full) $string = array_slice($string, 0, 1);
+        return $string ? implode(', ', $string) . ' yang lalu' : 'baru saja';
+    }
+
 }

@@ -1,4 +1,5 @@
 <?php require_once '../app/Views/templates/header.php'; ?>
+<?php require_once '../app/helpers/Helper.php'; ?>
 
 <div class="container">
     <div class="news-detail">
@@ -58,18 +59,33 @@
             <h5 class="text-left mb-4" style="padding-bottom: 10px;">Komentar</h5>
             <div class="comment-list" style="padding: 0px;">
                 <?php foreach ($comments as $comment): ?>
-                    <div class="comment-box" style="border: 1px solid #ccc; padding: 10px; margin-bottom: -1px;">
-                        <p><?= $comment['comment'] ?></p>
-                        <p class="text-muted"><?= $comment['fullname'] ?>, <?= $comment['created_at'] ?></p>
+                    <?php 
+                        // Mengambil inisial dari fullname
+                        $initials = '';
+                        $name_parts = explode(' ', $comment['fullname']);
+                        foreach ($name_parts as $part) {
+                            $initials .= strtoupper($part[0]);
+                        }
+                    ?>
+                    <div class="comment-box" style="">
+                        <div class="initials-circle">
+                            <?= $initials ?>
+                        </div>
+                        <div class="comment-content">
+                            <p class="text-muted comment-user"><?= $comment['fullname'] ?> <span  class="comment-date"><?= $comment['created_at'] ?></span></p>
+                            <p ><?= $comment['comment'] ?></p>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             </div>
             <?php if (isset($_SESSION['eid'])): ?>
+            <br>
             <div class="comment-form form-group mb-4" style="margin: 5px 0;">
                 <textarea class="form-control form-control-md shadow-none" id="comment" name="comment" placeholder="Masukkan Komentar" style="font-size: small; color: #666;" required></textarea>
                 <button type="button" id="btn-comment" class="btn btn-small" style="margin-top: 20px; margin-bottom: 20px; background-color: #3ba1da; color: #fff; padding: 10px 20px;">Kirim</button>
             </div>
             <?php else: ?>
+                <br><br>
                 <p>Anda harus login untuk mengirim komentar.</p>
             <?php endif; ?>
         </div>

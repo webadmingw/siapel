@@ -24,7 +24,8 @@ class HomeController {
 
     public function event($id) {
         $news = $this->eventModel->getById($id);
-        $registeredEvent = $this->eventModel->getEventRegByUserAndEventId($id, $_SESSION['eid']);
+        $eid = isset($_SESSION['eid']) ? $_SESSION['eid'] : "";
+        $registeredEvent = $this->eventModel->getEventRegByUserAndEventId($id, $eid);
         $comments = $this->eventModel->getCommentsByEventId($id);
         require_once '../app/Views/home/event.php';
     }

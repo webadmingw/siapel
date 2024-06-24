@@ -13,19 +13,19 @@
     <link rel="icon" href="<?= BASE_URL ?>images/sultra-32x32.png" sizes="32x32">
     <style>
         .input-search {
-            background-color: #f5f5f5;
+            background-color: #ffffff;
             font-size: small !important;
             border: none !important;
             width:80%;
             float: left;
         }
         .input-search:focus {
-            background-color: #f5f5f5;
+            background-color: #ffffff;
             box-shadow: none;
         }
         .button-search {
             padding:5px;
-            background-color: #f5f5f5;
+            background-color: #ffffff;
             border: none;
             float: left;
         }
@@ -52,7 +52,7 @@
         }
         .row.search-form {
             /* border: 1px solid #000000; */
-            background-color: #f5f5f5;
+            background-color: #ffffff;
             height:35px;
         }
     </style>
@@ -76,8 +76,8 @@
                     </a>
                 </div>
                 <div class="site-branding">
-                    <h1 class="site-title"><a href="<?= BASE_URL ?>" rel="home">SI APEL</a></h1>
-                    <p class="site-description">Sistem Informasi Aplikasi Pelatihan</p>
+                    <h1 class="site-title"><a href="<?= BASE_URL ?>" rel="home">SI APEL PAREKRAF</a></h1>
+                    <p class="site-description">Sistem Aplikasi Pelatihan Pariwisata dan Ekonomi Kreatif</p>
                 </div>
                 <img width="150" src="<?= BASE_URL ?>images/cinta.png" class="custom-logo-bangga" alt="Bangga " decoding="async" fetchpriority="high">
             </div>

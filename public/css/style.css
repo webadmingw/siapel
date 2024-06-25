@@ -15,7 +15,7 @@ body {
 
 main {
     margin-top: 200px;
-    height: 450px;
+    min-height: 450px;
 }
 
 @media (max-width: 768px) {

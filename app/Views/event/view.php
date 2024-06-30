@@ -21,6 +21,11 @@
                                 <a href="#" class="btn btn-xs btn-danger delete-event" data-id="<?= $news['id'] ?>" title="Delete" data-title="<?= $news['title'] ?>">
                                     <span class="text-xs">Hapus</span>
                                 </a>
+                                <?php if($news["t_participant"] > 0): ?>
+                                    <a href="<?= BASE_URL ?>event/participant/<?= $news['id'] ?>" title="Lihat Peserta" class="btn btn-xs btn-warning">
+                                        <span class="text-xs">Lihat Peserta</span>
+                                    </a>
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <tr>

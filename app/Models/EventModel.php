@@ -12,14 +12,30 @@ class EventModel {
             n.*, u.fullname updated_by, uc.fullname created_by, c.category, count(er.id) t_participant
         from training n 
         join users u on u.eid = n.updated_by
-        join users uc on u.eid = n.created_by
+        join users uc on uc.eid = n.created_by
         join category c on c.id = n.cat_id
         left join event_registrations er on er.event_id = n.id
         where 
             n.deleted=0
         group by n.id
-        order by n.updated_at;
+        order by n.created_at desc;
         ');
+        return $this->db->resultSet();
+    }
+
+    public function getParticipantById($evid) {
+        $this->db->query("
+        select 
+            er.*, u.fullname, u.addr,  ifnull(c.name, '') cities_name, u.ktp 
+        from event_registrations er 
+        join users u on u.eid = er.user_id 
+        left join cities c on c.code = u.cities
+        where 
+            er.event_id = :evid
+        order by registered_at asc
+        ;
+        ");
+        $this->db->bind(':evid', $evid);
         return $this->db->resultSet();
     }
 
@@ -119,8 +135,17 @@ class EventModel {
     }
 
     public function delete($id) {
-        $this->db->query('UPDATE training SET deleted = 1 WHERE id = :id');
+        $this->db->query('UPDATE training SET deleted = 1, updated_at = now(), updated_by = :eid WHERE id = :id');
         $this->db->bind(':id', $id);
+        $this->db->bind(':eid', $_SESSION['eid']);
+        return $this->db->execute();
+    }
+
+    public function published($id, $status=true) {
+        $this->db->query('UPDATE training SET published = :published, updated_at = now(), updated_by = :eid WHERE id = :id');
+        $this->db->bind(':id', $id);
+        $this->db->bind(':published', $status);
+        $this->db->bind(':eid', $_SESSION['eid']);
         return $this->db->execute();
     }
 

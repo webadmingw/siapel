@@ -37,6 +37,26 @@
                     <br>
                     <input type="password" class="form-control form-control-md shadow-none" id="confirm_password" name="confirm_password" placeholder="Konfirmasi Kata Kunci" style="font-size: small; color: #666;" required>
                 </div>
+                <div class="form-group mb-4">
+                    <label for="ktp" class="text-left">KTP:</label>
+                    <br>
+                    <input type="text" class="form-control form-control-md shadow-none" id="ktp" name="ktp" placeholder="Masukkan Nomor KTP" style="font-size: small; color: #666;" value="<?= isset($_POST['ktp']) ? $_POST['ktp'] : "" ?>" required>
+                </div>
+                <div class="form-group mb-4">
+                    <label for="addr" class="text-left">Alamat:</label>
+                    <br>
+                    <textarea placeholder="Masukkan Alamat" class="form-control form-control-md shadow-none" style="width: 100%; min-height: 150px;font-size: small; color: #666;" name="addr"><?= isset($_POST['addr']) ? $_POST['addr'] : "" ?></textarea> 
+                </div>
+                <div class="form-group mb-4">
+                    <label for="cities" class="text-left">Kab/Kota:</label>
+                    <br>
+                    <select class="form-control form-control-md shadow-none" id="cities" name="cities" style="font-size: small; color: #666;" required>
+                        <option value=""></option>
+                        <?php foreach ($cities as $c): ?>
+                            <option value="<?= $c['code'] ?>" <?= (isset($_POST['cities']) ? $_POST['cities'] : "") == $c['code'] ? 'selected' : ''; ?>><?= $c['name'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
                 <br>
                 <button type="submit" class="btn btn-small" style="margin-top: 20px; margin-bottom: 20px; background-color: #3ba1da; color: #fff; padding: 10px 20px;">Daftar</button>
             </form>

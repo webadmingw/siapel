@@ -7,7 +7,16 @@ class UserModel {
     }
 
     public function getUserByEid($eid) {
-        $this->db->query("select * from  users where eid = :eid and deleted = 0;");
+        $this->db->query("
+        select 
+            *, ifnull(c.name, '') city_name
+        from  users 
+        left join cities c on c.code = users.cities
+        where 
+            eid = :eid 
+            and deleted = 0
+        ;
+        ");
         $this->db->bind(':eid', $eid);
 
         return $this->db->single();
@@ -22,36 +31,45 @@ class UserModel {
         return $this->db->single();
     }
 
-    public function insertUser($eid, $email, $phone_number, $fullname, $password) {
+    public function insertUser($eid, $email, $phone_number, $fullname, $password, $ktp, $addr, $cities) {
         $password_hash = md5($password);
-        $this->db->query("insert into users (eid, email, phone_number, fullname, password_hash, deleted) values (:eid, :email, :phone_number, :fullname, :password_hash, 0)");
+        $this->db->query("insert into users (eid, email, phone_number, fullname, password_hash, ktp, addr, cities, deleted) values (:eid, :email, :phone_number, :fullname, :password_hash, :ktp, :addr, :cities, 0)");
         $this->db->bind(':eid', $eid);
         $this->db->bind(':email', $email);
         $this->db->bind(':phone_number', $phone_number);
         $this->db->bind(':fullname', $fullname);
         $this->db->bind(':password_hash', $password_hash);
+        $this->db->bind(':ktp', $ktp);
+        $this->db->bind(':addr', $addr);
+        $this->db->bind(':cities', $cities);
         return $this->db->execute();
     }
 
-    public function insertUserAdmin($eid, $email, $phone_number, $fullname, $password, $role) {
+    public function insertUserAdmin($eid, $email, $phone_number, $fullname, $password, $role, $ktp, $addr, $cities) {
         $password_hash = md5($password);
-        $this->db->query("insert into users (eid, email, phone_number, fullname, password_hash, role, deleted) values (:eid, :email, :phone_number, :fullname, :password_hash, :role, 0)");
+        $this->db->query("insert into users (eid, email, phone_number, fullname, password_hash, role, ktp, addr, cities, deleted) values (:eid, :email, :phone_number, :fullname, :password_hash, :role, :ktp, :addr, :cities, 0)");
         $this->db->bind(':eid', $eid);
         $this->db->bind(':email', $email);
         $this->db->bind(':phone_number', $phone_number);
         $this->db->bind(':fullname', $fullname);
         $this->db->bind(':password_hash', $password_hash);
         $this->db->bind(':role', $role);
+        $this->db->bind(':ktp', $ktp);
+        $this->db->bind(':addr', $addr);
+        $this->db->bind(':cities', $cities);
         return $this->db->execute();
     }
 
-    public function updateUserWithoutPassword($eid, $email, $phone_number, $fullname, $role) {
-        $this->db->query("update users set email = :email, phone_number = :phone_number, fullname = :fullname, role = :role where eid = :eid and deleted = 0;");
+    public function updateUserWithoutPassword($eid, $email, $phone_number, $fullname, $role, $ktp, $addr, $cities) {
+        $this->db->query("update users set email = :email, phone_number = :phone_number, fullname = :fullname, role = :role, ktp = :ktp, addr = :addr, cities = :cities where eid = :eid and deleted = 0;");
         $this->db->bind(':eid', $eid);
         $this->db->bind(':email', $email);
         $this->db->bind(':phone_number', $phone_number);
         $this->db->bind(':fullname', $fullname);
         $this->db->bind(':role', $role);
+        $this->db->bind(':ktp', $ktp);
+        $this->db->bind(':addr', $addr);
+        $this->db->bind(':cities', $cities);
         return $this->db->execute();
     }
 
@@ -71,10 +89,29 @@ class UserModel {
     }
 
     public function getAllUsers() {
-        $this->db->query("select * from users where deleted = 0;");
+        $this->db->query("
+        select 
+            *, ifnull(c.name, '') city_name
+        from  users 
+        left join cities c on c.code = users.cities
+        where 
+            deleted = 0
+        ;
+        ");
         return $this->db->resultSet();
     }
 
+    public function getAllCities() {
+        $this->db->query("
+        select 
+            c.* 
+        from states s 
+        join cities c on c.state_code = s.code 
+        where s.code = '641';
+        ");
+        return $this->db->resultSet();
+    }
+    
 }
 
 

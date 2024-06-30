@@ -13,22 +13,42 @@
                 <div class="form-group mb-4">
                     <label for="email" class="text-left">Email:</label>
                     <br>
-                    <input type="email" class="form-control form-control-md shadow-none" id="email" name="email" placeholder="Masukkan Email" style="font-size: small; color: #666;" value="<?= $user['email'] ?>" required>
+                    <input type="email" class="form-control form-control-md shadow-none" id="email" name="email" placeholder="Masukkan Email" style="font-size: small; color: #666;" value="<?= isset($_POST['email']) ? $_POST['email'] : $user['email'] ?>" required>
                 </div>
                 <div class="form-group mb-4">
                     <label for="phone_number" class="text-left">Nomor Telepon:</label>
                     <br>
-                    <input type="tel" class="form-control form-control-md shadow-none" id="phone_number" name="phone_number" placeholder="Masukkan Nomor Telepon" style="font-size: small; color: #666;" value="<?= $user['phone_number'] ?>" required>
+                    <input type="tel" class="form-control form-control-md shadow-none" id="phone_number" name="phone_number" placeholder="Masukkan Nomor Telepon" style="font-size: small; color: #666;" value="<?= isset($_POST['phone_number']) ? $_POST['phone_number'] : $user['phone_number'] ?>" required>
                 </div>
                 <div class="form-group mb-4">
                     <label for="fullname" class="text-left">Nama Lengkap:</label>
                     <br>
-                    <input type="text" class="form-control form-control-md shadow-none" id="fullname" name="fullname" placeholder="Masukkan Nama Lengkap" style="font-size: small; color: #666;" value="<?= $user['fullname'] ?>" required>
+                    <input type="text" class="form-control form-control-md shadow-none" id="fullname" name="fullname" placeholder="Masukkan Nama Lengkap" style="font-size: small; color: #666;" value="<?= isset($_POST['fullname']) ? $_POST['fullname'] : $user['fullname'] ?>" required>
+                </div>
+                <div class="form-group mb-4">
+                    <label for="ktp" class="text-left">KTP:</label>
+                    <br>
+                    <input type="text" class="form-control form-control-md shadow-none" id="ktp" name="ktp" placeholder="Masukkan Nomor KTP" style="font-size: small; color: #666;" value="<?= isset($_POST['ktp']) ? $_POST['ktp'] : $user['ktp'] ?>" required>
+                </div>
+                <div class="form-group mb-4">
+                    <label for="addr" class="text-left">Alamat:</label>
+                    <br>
+                    <textarea placeholder="Masukkan Alamat" class="form-control form-control-md shadow-none" style="width: 100%; min-height: 150px;font-size: small; color: #666;" name="addr"><?= isset($_POST['addr']) ? $_POST['addr'] : $user['addr'] ?></textarea> 
+                </div>
+                <div class="form-group mb-4">
+                    <label for="cities" class="text-left">Kab/Kota:</label>
+                    <br>
+                    <select class="form-control form-control-md shadow-none" id="cities" name="cities" style="font-size: small; color: #666;" required>
+                        <option value=""></option>
+                        <?php foreach ($cities as $c): ?>
+                            <option value="<?= $c['code'] ?>" <?= (isset($_POST['cities']) ? $_POST['cities'] : $user['cities']) == $c['code'] ? 'selected' : ''; ?>><?= $c['name'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <div class="form-group mb-4">
                     <label for="role" class="text-left">Role:</label>
                     <br>
-                    <select class="form-control form-control-md shadow-none" id="role" name="role" required>
+                    <select class="form-control form-control-md shadow-none" id="role" name="role" style="font-size: small; color: #666;" required>
                         <option value="admin" <?= $user['role'] == 'admin' ? 'selected' : ''; ?>>Admin</option>
                         <option value="contributor" <?= $user['role'] == 'contributor' ? 'selected' : ''; ?>>Kontributor</option>
                         <option value="participant" <?= $user['role'] == 'participant' ? 'selected' : ''; ?>>Peserta</option>

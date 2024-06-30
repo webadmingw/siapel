@@ -41,10 +41,12 @@
                             <th scope="row">Tempat</th>
                             <td><?= nl2br($news['venue']); ?></td>
                         </tr>
-                        <tr>
-                            <th scope="row">Zoom / Google Meet</th>
-                            <td><a href="<?= $news['online_link'] ?>"><?= $news['online_link'] ?></a></td>
-                        </tr>
+                        <?php if(isset($registeredEvent["registered_at"])): ?>
+                            <tr>
+                                <th scope="row">Zoom / Google Meet</th>
+                                <td><a href="<?= $news['online_link'] ?>"><?= $news['online_link'] ?></a></td>
+                            </tr>
+                        <?php endif; ?>
                         <tr>
                             <th scope="row">Peta Lokasi</th>
                             <td><a href="<?= $news['map_link'] ?>"><?= $news['map_link'] ?></a></td>

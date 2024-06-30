@@ -89,3 +89,19 @@ CREATE TABLE event_registrations (
     FOREIGN KEY (user_id) REFERENCES users(eid),
     FOREIGN KEY (event_id) REFERENCES training(id)
 );
+
+
+CREATE TABLE states (
+	code varchar(20) NOT NULL PRIMARY KEY,
+	`name` varchar(100) NULL
+);
+
+CREATE TABLE cities (
+	code varchar(20) NOT NULL PRIMARY KEY,
+	state_code varchar(20) NULL,
+	`name` varchar(100) NULL
+);
+
+alter table users add column addr text not null default '';
+alter table users add column cities varchar(20) not null default '';
+alter table users add column ktp varchar(25) not null default '';

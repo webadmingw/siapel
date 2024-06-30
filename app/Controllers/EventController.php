@@ -34,9 +34,54 @@ class EventController {
         exit;
     }
 
+    public function open($id) {
+        $this->eventModel->published($id);
+        header('Location: ' . BASE_URL . "event");
+        exit;
+    }
+
+    public function close($id) {
+        $this->eventModel->published($id, false);
+        header('Location: ' . BASE_URL . "event");
+        exit;
+    }
+
     public function view($id) {
         $news = $this->eventModel->getById($id);
         require_once '../app/Views/event/view.php';
+    }
+
+    public function participant($id) {
+        $event = $this->eventModel->getById($id);
+        $par = $this->eventModel->getParticipantById($id);
+        require_once '../app/Views/event/participant.php';
+    }
+
+    public function download($id) {
+        $event = $this->eventModel->getById($id);
+        $par = $this->eventModel->getParticipantById($id);
+        
+        // Set the filename
+        $filename = "peserta_".$event["title"].".csv";
+
+        // Set the headers to force download
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+
+        // Open the output stream
+        $output = fopen('php://output', 'w');
+
+        // Output the column headings
+        fputcsv($output, ['Peserta', 'KTP', 'Alamat', 'Kota', 'Tanggal Registrasi']);
+
+        // Output the data
+        foreach ($par as $p) {
+            fputcsv($output, [$p['fullname'], $p['ktp'], $p['addr'], $p['cities_name'], $p['registered_at']]);
+        }
+
+        // Close the output stream
+        fclose($output);
+        exit;
     }
 
     public function edit($id) {

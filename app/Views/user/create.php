@@ -37,9 +37,29 @@
                     <input type="password" class="form-control form-control-md shadow-none" id="confirm_password" name="confirm_password" placeholder="Konfirmasi Kata Kunci" style="font-size: small; color: #666;" required>
                 </div>
                 <div class="form-group mb-4">
+                    <label for="ktp" class="text-left">KTP:</label>
+                    <br>
+                    <input type="text" class="form-control form-control-md shadow-none" id="ktp" name="ktp" placeholder="Masukkan Nomor KTP" style="font-size: small; color: #666;" value="<?= isset($_POST['ktp']) ? $_POST['ktp'] : "" ?>" required>
+                </div>
+                <div class="form-group mb-4">
+                    <label for="addr" class="text-left">Alamat:</label>
+                    <br>
+                    <textarea placeholder="Masukkan Alamat" class="form-control form-control-md shadow-none" style="width: 100%; min-height: 150px;font-size: small; color: #666;" name="addr"><?= isset($_POST['addr']) ? $_POST['addr'] : "" ?></textarea> 
+                </div>
+                <div class="form-group mb-4">
+                    <label for="cities" class="text-left">Kab/Kota:</label>
+                    <br>
+                    <select class="form-control form-control-md shadow-none" id="cities" name="cities" style="font-size: small; color: #666;" required>
+                        <option value=""></option>
+                        <?php foreach ($cities as $c): ?>
+                            <option value="<?= $c['code'] ?>" <?= (isset($_POST['cities']) ? $_POST['cities'] : "") == $c['code'] ? 'selected' : ''; ?>><?= $c['name'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-group mb-4">
                     <label for="role" class="text-left">Role:</label>
                     <br>
-                    <select class="form-control form-control-md shadow-none" id="role" name="role" required>
+                    <select class="form-control form-control-md shadow-none" id="role" name="role" style="font-size: small; color: #666;" required>
                         <option value="admin" <?= isset($post['role']) && $post['role'] == 'admin' ? 'selected' : ''; ?>>Admin</option>
                         <option value="contributor" <?= isset($post['role']) && $post['role'] == 'contributor' ? 'selected' : ''; ?>>Kontributor</option>
                         <option value="participant" <?= isset($post['role']) && $post['role'] == 'participant' ? 'selected' : ''; ?>>Peserta</option>

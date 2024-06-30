@@ -21,7 +21,7 @@ class UserController {
             if (isset($_POST["password"]) && isset($_POST["confirm_password"]) && $_POST["password"] !== $_POST["confirm_password"]) {
                 $error = "Kata Kunci dan Konfirmasi tidak sama.";
             } else {
-                $r = $this->user->insertUser($_POST["nomor_eid"], $_POST["email"], $_POST["phone_number"], $_POST["fullname"], $_POST["password"]); 
+                $r = $this->user->insertUser($_POST["nomor_eid"], $_POST["email"], $_POST["phone_number"], $_POST["fullname"], $_POST["password"], $_POST["ktp"], $_POST["addr"], $_POST["cities"]); 
                 if ($r === true) {
                     // redirect to home page
                     header('Location: ' . BASE_URL . "login");
@@ -31,6 +31,8 @@ class UserController {
                 }
             }
         } 
+
+        $cities = $this->user->getAllCities();
         require_once '../app/Views/user/register.php';
     }
 
@@ -42,7 +44,7 @@ class UserController {
             if (isset($_POST["password"]) && isset($_POST["confirm_password"]) && $_POST["password"] !== $_POST["confirm_password"]) {
                 $error = "Kata Kunci dan Konfirmasi tidak sama.";
             } else {
-                $r = $this->user->insertUserAdmin($_POST["nomor_eid"], $_POST["email"], $_POST["phone_number"], $_POST["fullname"], $_POST["password"], $_POST["role"]); 
+                $r = $this->user->insertUserAdmin($_POST["nomor_eid"], $_POST["email"], $_POST["phone_number"], $_POST["fullname"], $_POST["password"], $_POST["role"], $_POST["ktp"], $_POST["addr"], $_POST["cities"]); 
                 if ($r === true) {
                     // redirect to home page
                     header('Location: ' . BASE_URL . "user");
@@ -52,6 +54,8 @@ class UserController {
                 }
             }
         } 
+
+        $cities = $this->user->getAllCities();
         require_once '../app/Views/user/create.php';
     }
 
@@ -90,7 +94,7 @@ class UserController {
         $error = "";
         $eid = $id;
         if($_POST){
-            $r = $this->user->updateUserWithoutPassword($id, $_POST["email"], $_POST["phone_number"], $_POST["fullname"], $_POST["role"]);
+            $r = $this->user->updateUserWithoutPassword($id, $_POST["email"], $_POST["phone_number"], $_POST["fullname"], $_POST["role"], $_POST["ktp"], $_POST["addr"], $_POST["cities"]);
             if ($r === true) {
                 header('Location: ' . BASE_URL . "user");
                 exit;
@@ -99,6 +103,7 @@ class UserController {
             }
         }
         $user = $this->user->getUserByEid($id);
+        $cities = $this->user->getAllCities();
         require_once '../app/Views/user/edit.php';
     }
 }

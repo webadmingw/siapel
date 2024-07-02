@@ -109,7 +109,7 @@ class EventModel {
         return $this->db->execute();
     }
 
-    public function update($id, $title, $description, $start_time, $end_time, $venue, $online_link, $map_link) {
+    public function update($id, $title, $description, $start_time, $end_time, $venue, $online_link, $map_link, $attachment) {
         $this->db->query('
         UPDATE training 
         SET 
@@ -119,7 +119,8 @@ class EventModel {
             end_time = :end_time, 
             venue = :venue, 
             online_link = :online_link, 
-            map_link = :map_link 
+            map_link = :map_link,
+            attachment = :attachment 
         WHERE 
             id = :id;
         ');
@@ -131,6 +132,7 @@ class EventModel {
         $this->db->bind(':venue', $venue);
         $this->db->bind(':online_link', $online_link);
         $this->db->bind(':map_link', $map_link);
+        $this->db->bind(':attachment', $attachment);
         return $this->db->execute();
     }
 
@@ -149,8 +151,8 @@ class EventModel {
         return $this->db->execute();
     }
 
-    public function addTraining($title, $description, $start_time, $end_time, $venue, $cat_id, $online_link, $map_link) {
-        $this->db->query('INSERT INTO training (title, description, start_time, end_time, venue, cat_id, online_link, map_link, created_by, updated_by) VALUES (:title, :description, :start_time, :end_time, :venue, :cat_id, :online_link, :map_link, :created_by, :updated_by)');
+    public function addTraining($title, $description, $start_time, $end_time, $venue, $cat_id, $online_link, $map_link, $attachment) {
+        $this->db->query('INSERT INTO training (title, description, start_time, end_time, venue, cat_id, online_link, map_link, created_by, updated_by, attachment) VALUES (:title, :description, :start_time, :end_time, :venue, :cat_id, :online_link, :map_link, :created_by, :updated_by, :attachment)');
         $this->db->bind(':title', $title);
         $this->db->bind(':description', $description);
         $this->db->bind(':start_time', $start_time);
@@ -161,6 +163,7 @@ class EventModel {
         $this->db->bind(':map_link', $map_link);
         $this->db->bind(':created_by', $_SESSION['eid']);
         $this->db->bind(':updated_by', $_SESSION['eid']);
+        $this->db->bind(':attachment', $attachment);
         return $this->db->execute();
     }
 

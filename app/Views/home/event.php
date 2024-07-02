@@ -51,6 +51,12 @@
                             <th scope="row">Peta Lokasi</th>
                             <td><a href="<?= $news['map_link'] ?>"><?= $news['map_link'] ?></a></td>
                         </tr>
+                        <?php if(isset($registeredEvent["registered_at"])): ?>
+                            <tr>
+                                <th scope="row">Materi Pelatihan</th>
+                                <td><a href="<?= $news['attachment'] ?>"><?= $news['attachment'] ?></a></td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>

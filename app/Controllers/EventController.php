@@ -85,6 +85,8 @@ class EventController {
     }
 
     public function edit($id) {
+        $news = $this->eventModel->getById($id);
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $title = $_POST['title'];
             $description = $_POST['description'];
@@ -93,10 +95,18 @@ class EventController {
             $venue = $_POST['venue'];
             $online_link = $_POST['online_link'];
             $map_link = $_POST['map_link'];
-            $this->eventModel->update($id, $title, $description, $start_time, $end_time, $venue, $online_link, $map_link);
+            $attachment = isset($_FILES['attachment']['name']) ? $_FILES['attachment']['name'] : $news['attachment'];
+
+            if(isset($_FILES['attachment']['name'])){
+                // Handle attachment upload
+                $target_dir = "../public/upload/";
+                $target_file = $target_dir . basename($attachment);
+                move_uploaded_file($_FILES['attachment']['tmp_name'], $target_file);
+            }
+
+            $this->eventModel->update($id, $title, $description, $start_time, $end_time, $venue, $online_link, $map_link, $attachment);
         } 
 
-        $news = $this->eventModel->getById($id);
         require_once '../app/Views/event/edit.php';
     }
 
@@ -133,12 +143,21 @@ class EventController {
             $map_link = $_POST['map_link'];
             $cat_id = 1;
 
+            $attachment = isset($_FILES['attachment']['name']) ? $_FILES['attachment']['name'] : "";
+
+            if(isset($_FILES['attachment']['name'])){
+                // Handle attachment upload
+                $target_dir = "../public/upload/";
+                $target_file = $target_dir . basename($attachment);
+                move_uploaded_file($_FILES['attachment']['tmp_name'], $target_file);
+            }
+
             if (!empty($errors)) {
                 require_once '../app/Views/event/create.php';
                 exit;
             }
             
-            if($this->eventModel->addTraining($title, $description, $start_time, $end_time, $venue, $cat_id, $online_link, $map_link)){
+            if($this->eventModel->addTraining($title, $description, $start_time, $end_time, $venue, $cat_id, $online_link, $map_link, $attachment)){
                 header('Location: ' . BASE_URL . "event");
                 exit;
             }else{

@@ -58,6 +58,14 @@
                             <th scope="row">Peta Lokasi</th>
                             <td><a href="<?= $news['map_link'] ?>"><?= $news['map_link'] ?></a></td>
                         </tr>
+                        <tr>
+                            <th scope="row">Materi Pelatihan</th>
+                            <td>
+                                <?php if(isset($news['attachment']) && $news['attachment'] != ""): ?>
+                                    <a href="<?= BASE_URL . "upload/" . $news['attachment'] ?>">download materi pelatihan</a>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

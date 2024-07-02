@@ -1,7 +1,7 @@
 <?php require_once '../app/Views/templates/header.php'; ?>
 
 <div class="container">
-<form id="login-form" method="post" action="<?= BASE_URL ?>event/create" >
+<form id="login-form" method="post" action="<?= BASE_URL ?>event/create" enctype="multipart/form-data">
     <div class="news-detail">
         <div class="row justify-content-start">
             <div class="col-md-12 p-4">
@@ -81,6 +81,13 @@
                                 <?php if (isset($errors['map_link'])): ?>
                                     <small class="text-danger"><?= $errors['map_link']; ?></small>
                                 <?php endif; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Materi Pelatihan</th>
+                            <td>
+                                <img id="show-room" alt="" style="width:150px;font-size: small; color: #666;"><br>
+                                <input type="file" id="attachment" name="attachment" class="form-control" placeholder="Pilih berkas" required>
                             </td>
                         </tr>
                     </tbody>

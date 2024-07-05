@@ -43,7 +43,7 @@ class EventModel {
         $search = "%{$keyword}%";
         return $this->db->queryLike("
         select 
-            n.*, u.fullname, c.category, count(er.id) t_participant
+            n.*, u.fullname, c.category, (now() > n.start_time) ongoing, (now() > n.end_time) completed, count(er.id) t_participant
         from training n 
         join users u on u.eid = n.updated_by
         join category c on c.id = n.cat_id
@@ -51,7 +51,6 @@ class EventModel {
         where 
             n.published=1 
             and n.deleted=0
-            and start_time > now()
             and n.title like ?
         group by n.id
         order by n.updated_at;
@@ -61,7 +60,7 @@ class EventModel {
     public function getAllHomePage() {
         $this->db->query('
         select 
-            n.*, u.fullname, c.category, count(er.id) t_participant
+            n.*, u.fullname, c.category, (now() > n.start_time) ongoing, (now() > n.end_time) completed, count(er.id) t_participant
         from training n 
         join users u on u.eid = n.updated_by
         join category c on c.id = n.cat_id
@@ -69,7 +68,6 @@ class EventModel {
         where 
             n.published=1 
             and n.deleted=0
-            and start_time > now()
         group by n.id
         order by n.updated_at;
         ');
@@ -79,7 +77,7 @@ class EventModel {
     public function getById($id) {
         $this->db->query('
         select 
-            n.*, u.fullname, c.category, count(er.id) t_participant 
+            n.*, u.fullname, c.category, (now() > n.start_time) ongoing, (now() > n.end_time) completed, count(er.id) t_participant 
         from training n 
         join users u on u.eid = n.updated_by 
         join category c on c.id = n.cat_id

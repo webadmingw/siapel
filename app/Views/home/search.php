@@ -9,7 +9,16 @@
         <?php } else { ?>
             <?php foreach ($event as $eventItem) { ?>
                 <article>
-                    <h5><a href="<?= BASE_URL; ?>home/event/<?= $eventItem['id']; ?>"><?= $eventItem['title']; ?></a></h5>
+                    <h5>
+                        <a href="<?= BASE_URL; ?>home/event/<?= $eventItem['id']; ?>"><?= $eventItem['title']; ?>
+                            <?= $eventItem['title']; ?>
+                            <?php if($eventItem['completed']): ?>
+                                <span style="font-size:15px;color:red;">(Selesai)</span>
+                            <?php elseif($eventItem['ongoing'] && !$eventItem['completed']): ?>
+                                <span style="font-size:15px;color:red;">(Sedang Berlangsung)</span>
+                            <?php endif; ?>
+                        </a>
+                    </h5>
                     <p><small style="color: #bbb;">
                         <?= Helper::ConvertDateTime($eventItem['start_time']); ?>
                     </small></p>

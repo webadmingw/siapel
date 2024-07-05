@@ -18,7 +18,13 @@
                             <tr>
                                 <td colspan="2">
                                     <?php if(!isset($registeredEvent["registered_at"])): ?>
-                                        <a href="<?= BASE_URL ?>home/reg/<?= $news['id'] ?>">Ikuti pelatihan sekarang</a>
+                                        <?php if($news['completed']): ?>
+                                            <span style="font-size:15px;color:red;">(Selesai)</span>
+                                        <?php elseif($news['ongoing'] && !$news['completed']): ?>
+                                            <span style="font-size:15px;color:red;">(Sedang Berlangsung)</span>
+                                        <?php else: ?>
+                                            <a href="<?= BASE_URL ?>home/reg/<?= $news['id'] ?>">Ikuti pelatihan sekarang</a>
+                                        <?php endif; ?>
                                     <?php else: ?>
                                         <?= "Anda sudah terdaftar di pelatihan ini" ?>
                                     <?php endif; ?>

@@ -1,3 +1,38 @@
-RewriteEngine on
+# Disable directory browsing
+Options -Indexes
+
+# Protect against XSS, clickjacking and other security issues
+<IfModule mod_headers.c>
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-Content-Type-Options "nosniff"
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
+</IfModule>
+
+# Protect sensitive files
+<FilesMatch "^\.(htaccess|htpasswd|ini|log|sh|inc|bak)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Rewrite rules
+RewriteEngine On
 RewriteRule ^$ public/ [L]
 RewriteRule (.*) public/$1 [L]
+
+# PHP settings
+<IfModule mod_php.c>
+    php_flag display_errors off
+    php_value max_execution_time 30
+    php_value max_input_time 60
+    php_value max_input_vars 1000
+    php_value memory_limit 128M
+    php_value post_max_size 8M
+    php_value session.gc_maxlifetime 1440
+    php_value session.save_handler files
+    php_value upload_max_filesize 2M
+    php_flag session.cookie_httponly on
+    php_flag session.cookie_secure on
+    php_flag session.use_strict_mode on
+</IfModule>

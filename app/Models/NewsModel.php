@@ -1,4 +1,6 @@
 <?php
+require_once '../app/Core/security.php';
+
 class NewsModel {
     private $db;
 
@@ -66,20 +68,30 @@ class NewsModel {
     }
 
     public function createNews($title, $content, $contributor_id, $image) {
+        // Sanitize input
+        $title = Security::sanitizeInput($title);
+        $content = Security::sanitizeInput($content);
+        $image = Security::sanitizeInput($image);
+
         $this->db->query('INSERT INTO news (title, content, created_by, updated_by, image, published) VALUES (:title, :content, :contributor_id, :contributor_id, :image, 1)');
         $this->db->bind(':title', $title);
         $this->db->bind(':content', $content);
-        $this->db->bind(':contributor_id', $contributor_id);
+        $this->db->bind(':contributor_id', (int)$contributor_id);
         $this->db->bind(':image', $image);
         return $this->db->execute();
     }
 
     public function updateNews($id, $title, $content, $image) {
+        // Sanitize input
+        $title = Security::sanitizeInput($title);
+        $content = Security::sanitizeInput($content);
+        $image = Security::sanitizeInput($image);
+
         $this->db->query('UPDATE news SET title = :title, content = :content, image = :image WHERE id = :id');
         $this->db->bind(':title', $title);
         $this->db->bind(':content', $content);
         $this->db->bind(':image', $image);
-        $this->db->bind(':id', $id);
+        $this->db->bind(':id', (int)$id);
         return $this->db->execute();
     }
 

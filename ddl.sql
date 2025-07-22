@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `email_un` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
-insert into users (eid, email, phone_number, fullname, password_hash, `role`) values (111111, 'rdiSensation@gmail.com', '081243328881', 'Super Administrator', md5('admin'), 'admin');
+-- insert into users (eid, email, phone_number, fullname, password_hash, `role`) values (111111, 'rdiSensation@gmail.com', '081243328881', 'Super Administrator', md5('admin'), 'admin');
 
 -- Category Events Table
 CREATE TABLE IF NOT EXISTS category (
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS category (
     FOREIGN KEY (updated_by) REFERENCES users(eid)
 );
 
-insert into category (category, created_by, updated_by) values ('Keuangan', 111111, 111111);
+-- insert into category (category, created_by, updated_by) values ('Keuangan', 111111, 111111);
 
 -- Training Events Table
 CREATE TABLE IF NOT EXISTS training (

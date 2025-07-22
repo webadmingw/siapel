@@ -1,4 +1,4 @@
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `eid` int(11) NOT NULL,
   `email` varchar(45) NOT NULL,
   `phone_number` varchar(15) NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE `users` (
 insert into users (eid, email, phone_number, fullname, password_hash, `role`) values (111111, 'rdiSensation@gmail.com', '081243328881', 'Super Administrator', md5('admin'), 'admin');
 
 -- Category Events Table
-CREATE TABLE category (
+CREATE TABLE IF NOT EXISTS category (
     id INT AUTO_INCREMENT PRIMARY KEY,
     category VARCHAR(255) NOT NULL,
     deleted bool NOT NULL DEFAULT false,
@@ -32,7 +32,7 @@ CREATE TABLE category (
 insert into category (category, created_by, updated_by) values ('Keuangan', 111111, 111111);
 
 -- Training Events Table
-CREATE TABLE training (
+CREATE TABLE IF NOT EXISTS training (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE training (
 );
 
 -- News Table
-CREATE TABLE news (
+CREATE TABLE IF NOT EXISTS news (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE news (
 );
 
 -- Comments Table
-CREATE TABLE comments (
+CREATE TABLE IF NOT EXISTS comments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     comment TEXT NOT NULL,
     event_id INT,
@@ -81,7 +81,7 @@ CREATE TABLE comments (
 );
 
 -- Event Registrations Table
-CREATE TABLE event_registrations (
+CREATE TABLE IF NOT EXISTS event_registrations (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     event_id INT NOT NULL,
@@ -91,12 +91,12 @@ CREATE TABLE event_registrations (
 );
 
 
-CREATE TABLE states (
+CREATE TABLE IF NOT EXISTS states (
 	code varchar(20) NOT NULL PRIMARY KEY,
 	`name` varchar(100) NULL
 );
 
-CREATE TABLE cities (
+CREATE TABLE IF NOT EXISTS cities (
 	code varchar(20) NOT NULL PRIMARY KEY,
 	state_code varchar(20) NULL,
 	`name` varchar(100) NULL

@@ -39,7 +39,7 @@ CREATE TABLE training (
     image VARCHAR(255),
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
-    venue text not null default 'Online',
+    venue text null,
     map_link VARCHAR(255) null,
     online_link VARCHAR(255) null,
     cat_id INT NOT NULL,
